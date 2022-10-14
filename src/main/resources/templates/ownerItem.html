@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand ms-5" href="#" ><iconify-icon inline icon="ic:round-pets" width="48" height="48" flip="horizontal"></iconify-icon></a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/owner}">Sahip Listesi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pet}">Evcil Hayvanlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/newForm}">Kayıt Ekle</a>
+                </li>
+            </ul>
+            <form th:action="@{/pet}" class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Search" name="petName" id="petName" th:value="${petName}" required>
+                <button class="btn btn-outline-success" type="submit">Ara</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active"  th:text="${owner.firstName}"></a>
+                <a class="nav-link active"  th:text="${owner.lastName}"></a>
+
+            </li>
+        </ul>
+    </div>
+    <h5 class="card-title">Sahip Bilgileri</h5>
+
+    <div class="card-body">
+        <ul class="list-group">
+            <div class="row">
+                <div class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>İsim Soyisim:</b>  <span th:text="${owner.firstName} +' '+ ${owner.lastName}"></span></li>
+                </div>
+
+                <div  class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>Telefon Numarası:</b>  <span th:text="${owner.phoneNumber}"></span></li>
+                </div>
+
+                <div  class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>Email:</b>  <span th:text="${owner.email}"></span></li>
+                </div>
+
+            </div>
+        </ul>
+
+    </div>
+
+</div>
+
+
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active"></a>
+            </li>
+        </ul>
+
+    </div>
+    <h5 class="card-title">Evcil Hayvan Bilgileri</h5>
+
+    <th:block th:each="pet : ${pets}">
+    <div class="card-body">
+        <ul class="list-group">
+            <div class="row">
+                <div class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>İsim:</b>  <span th:text="${pet.name}"></span></li>
+                </div>
+
+                <div  class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>Yaş:</b>  <span th:text="${pet.age}"></span></li>
+                </div>
+
+                <div  class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>Cinsiyet:</b>  <span th:text="${pet.gender}"></span></li>
+                </div>
+
+
+                <div  class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>Tür:</b>  <span th:text="${pet.species}"></span></li>
+                </div>
+
+                <div  class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item"> <b>Sahip Bilgisi:</b>  <span th:text="${pet.owner.firstName} + ' ' +  ${pet.owner.lastName}"></span></li>
+                </div>
+            </div>
+        <div class="row">
+            <ul class="list-group">
+                <div class="col-lg-6 col-sm-12 mt-2">
+                    <li class="list-group-item" style="box-shadow: aqua"> <b>Açıklama:</b>  <span th:text="${pet.description}"></span></li>
+                </div>
+            </ul>
+        </div>
+        </ul>
+    </div>
+    </th:block>
+
+</div>
+
+</body>
+</html>

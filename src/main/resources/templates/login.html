@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Giriş Yap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="/login.css" rel="stylesheet"/>
+</head>
+<body>
+
+<main class="form-signin">
+    <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="/images/vet.png"
+             class="img-fluid ms-5" alt="Sample image">
+    </div>
+
+    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form th:action="@{/login}" th:object="${loginDto}" method="post" class="form login mt-4 ms-5">
+            <h1 class="h3 mb-4 fw-normal">Giriş Yapınız</h1>
+            <div class="form-floating mb-3">
+                <input type="text" name="username" th:field="*{username}"  class="form-control" id="floatingInput" placeholder="Kullanıcı adı" autofocus="true">
+                <span class="has-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:text="${error}"></span>
+
+                <label for="floatingInput">Kullanıcı adı</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" name="password"  th:field="*{password}" class="form-control" id="floatingPassword" placeholder="Şifre giriniz">
+                <label for="floatingPassword">Şifre</label>
+                <span class="has-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:text="${error}"></span>
+
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4">
+                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Giriş Yap</button>
+            </div>
+
+            <div class="text-center">
+            <p>Üye değil misiniz?<a href="/registration"> Hesap oluşturun</a></p>
+            </div>
+
+        </form>
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+
+.text{
+    font-weight: bold;
+    font-size: 24px;
+}
+.nav-item{
+    margin-left: 15px;
+}
+.navbar{
+    border-bottom: 1px solid #eceef3;
+}
+
+.btn{
+    border-radius: 8px;
+    width: 320px;
+    margin-left: .4rem;
+    font-weight: bold;
+}
+
+.form-select{
+    font-size: 14px;
+    padding: .8rem;
+    border-radius: 16px;
+    width: 420px;
+}
+.form-control{
+    font-size: 14px;
+    padding: .8rem;
+    border-radius: 16px;
+    width: 420px;
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/owners.css" rel="stylesheet"/>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
+    <script src=https://code.jquery.com/jquery-3.6.0.js></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Title</title>
+</head>
+
+<body style="background-color: #f1f1f1; ">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid ">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand ms-5" href="#">
+            <iconify-icon inline icon="ic:round-pets" width="48" height="48" flip="horizontal"></iconify-icon>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/owner}">Sahip Listesi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pet}">Evcil Hayvanlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/newForm}">Kayıt Ekle</a>
+                </li>
+            </ul>
+            <form th:action="@{/owner}" class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Search"  name="keyword" id="keyword" th:value="${keyword}" required>
+                <button class="btn btn-outline-success" type="submit">Ara</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <table class="table align-middle mb-0 bg-white ms-3 mt-3">
+        <thead class="bg-light">
+        <tr>
+            <th>İsim Soyisim</th>
+            <th>Telefon Numarası</th>
+            <th>Detay</th>
+            <th>Düzenle</th>
+            <th>Sil</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="owner: ${owners}">
+            <td>
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="fw-bold mb-1" th:text="${owner.firstName} +' '+ ${owner.lastName}"></p>
+                        <p class="text-muted mb-0" th:text="${owner.email}"></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <p class="fw-normal mb-1" th:text="${owner.phoneNumber}"></p>
+            </td>
+            <td>
+                <a th:href="@{/owner/{id}(id=${owner.id})}" type="button" class="btn btn-success">Detaylı Açıklama</a>
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" th:attr="data-bs-target=${'#editModal'+owner.id}" data-row="${owner}">Düzenle</button>
+
+                <div class="modal" th:attr="id=${'editModal' + owner.id}">
+                    <div class="modal-dialog  modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Kayıt Sahibini Düzenle</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" action="#" th:action="@{/updateOwner/{id}(id=${owner.id})}" th:object="${newOwner}"
+                                      th:method="post">
+                                    <label class="label">
+                                        İsim:
+                                    <input type="text" th:field="*{firstName}"
+                                           th:placeholder="${owner.firstName}" class="form-control mb-4 col-4">
+                                    </label>
+
+                                    <label class="label">
+                                        Soyisim:
+                                    <input type="text" th:field="*{lastName}"
+                                           th:placeholder="${owner.lastName}" class="form-control mb-4 col-4">
+                                    </label>
+
+                                    <label class="label">
+                                        Email:
+                                    <input type="text" th:field="*{email}"
+                                           th:placeholder="${owner.email}" class="form-control mb-4 col-4">
+                                    </label>
+
+                                    <label class="label">
+                                        Telefon Numarası:
+                                    <input type="text" th:field="*{phoneNumber}"
+                                           th:placeholder="${owner.phoneNumber}" class="form-control mb-4 col-4">
+                                    </label>
+
+                                    <button type="submit" class="btn btn-outline-success col-2">Güncelle</button>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" th:attr="data-bs-target=${'#deleteModal'+owner.id}" data-row="${owner}">Sil</button>
+
+                <div class="modal" th:attr="id=${'deleteModal' + owner.id}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Kayıt Sahibini Sil</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div th:text="${owner.firstName}+' '+${owner.lastName}"/>  kullanıcısını silmek üzeresiniz. Bu işlem kullanıcıya ait bütün evcil hayvan kayıtlarını siler.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form action="" th:action="@{/delete/{id}(id=${owner.id})}" th:object="${owner}" th:method="post">
+                                    <button type="submit" class="btn btn-primary">Sil</button>
+                                    <input type="text" hidden="true">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
